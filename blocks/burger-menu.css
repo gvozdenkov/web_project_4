@@ -79,6 +79,18 @@
   top: 0;
   transform: rotate(90deg);
 } */
+
+/* Add .svg icon for burber and close
+   to replace <span> burger */
+
+/* [for=menu__toggle]::before {
+  content: "≡";
+}
+
+.burger-menu__toggle:checked + [for=menu__toggle]::before {
+  content: "⊗";
+} */
+
 .burger-menu__toggle:checked ~ .burger-menu__items {
   visibility: visible;
 }

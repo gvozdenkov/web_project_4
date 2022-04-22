@@ -1,10 +1,10 @@
 @import url(./common.css);
-@import url(../blocks/body.css);
-@import url(../blocks/page.css);
 @import url(../blocks/header.css);
 @import url(../blocks/logo.css);
 @import url(../blocks/nav.css);
 @import url(../blocks/burger-menu.css);
+@import url(../blocks/profile.css);
+@import url(../blocks/profile-header.css);
 
 
 * {
@@ -43,6 +43,6 @@
 
 @media (max-width: 425px) {
   .page {
-    padding: 0 15px 0;
+    padding: 0 19px 0;
   }
 }
