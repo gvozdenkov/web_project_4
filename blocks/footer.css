@@ -15,7 +15,7 @@
 
 .footer__logos {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 15px;
 }
 
@@ -23,27 +23,27 @@
   opacity: 0.5;
   width: 30px;
   height: 30px;
+  background-size: cover;
   transition: opacity 0.15s ease-in-out;
 }
 
+.footer__logo_hover:focus,
 .footer__logo_hover:hover {
   opacity: 1;
 }
 
 .footer__logo_facebook {
   background-image: url(../images/facebook_white.svg);
-  background-size: cover;
 }
 
 .footer__logo_instagram {
   background-image: url(../images/instagram_white.svg);
-  background-size: cover;
 }
 
 .footer__logo_practicum {
   background-image: url(../images/logo_practicum.svg);
-  background-size: cover;
-  width: 145px;
+  height: 35px;
+  width: 170px;
 }
 
 @media (max-width: 768px) {
@@ -58,4 +58,3 @@
     gap: 20px;
   }
 }
-
