@@ -80,10 +80,10 @@
                   <img
                     src="./images/edit_button.svg"
                     alt="edit profile button"
-                    class="profile-header__edit-btn"
+                    class="profile-header__edit-btn profile-header__edit-btn_action_edit"
                   />
                 </div>
-                <p class="profile-header__status">Explorer</p>
+                <p class="profile-header__about">Explorer</p>
               </div>
             </div>
             <div class="profile-header__add-btn">
@@ -95,31 +95,42 @@
             </div>
           </div>
           <!-- popup -->
-          <div class="popup popup_opened">
+          <div class="popup">
+            <div class="popup__close-area"></div>
             <div class="popup__container">
-              <img src="./images/close_icon.svg" alt="close button" class="popup__close">
+              <img
+                src="./images/close_icon.svg"
+                alt="close button"
+                class="popup__close"
+              />
               <form action="" method="post" class="form">
                 <h2 class="form__title">Edit Profile</h2>
                 <fieldset class="form__fieldset">
                   <!-- <label for="username" class="form__label">Username</label> -->
                   <input
-                  type="text"
-                  class="form__input"
-                  id="username"
-                  name="username"
-                  placeholder="Name"
+                    type="text"
+                    class="form__input form__input_type_username"
+                    id="username"
+                    name="username"
+                    placeholder="Name"
+                    required
                   />
                   <!-- <label for="about" class="form__label">About</label> -->
                   <input
-                  type="text"
-                  class="form__input"
-                  id="about"
-                  name="about"
-                  placeholder="About"
+                    type="text"
+                    class="form__input form__input_type_about"
+                    id="about"
+                    name="about"
+                    placeholder="About me"
                   />
                 </fieldset>
                 <fieldset class="form__fieldset">
-                  <button type="submit" class="form__button">Save</button>
+                  <button
+                    type="submit"
+                    class="form__button form__button_action_save"
+                  >
+                    Save
+                  </button>
                 </fieldset>
               </form>
             </div>
@@ -135,7 +146,7 @@
                 class="card__img"
               />
               <div class="card__footer">
-                <p class="card__title">Lake Louse</p>
+                <p class="card__title">Lake Louse awesome place</p>
                 <div class="card__like"></div>
               </div>
             </article>

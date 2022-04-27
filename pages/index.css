@@ -21,6 +21,10 @@
   background-color: rgb(0, 0, 0);
 }
 
+.body__lock {
+  overflow: hidden;
+}
+
 .page {
   max-width: 880px;
   box-sizing: border-box;
