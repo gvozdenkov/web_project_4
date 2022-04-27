@@ -27,6 +27,7 @@
   </head>
   <body class="body">
     <div class="page">
+      <!-- header -->
       <header class="header">
         <nav class="nav">
           <a href="#">
@@ -91,6 +92,36 @@
                 alt="plus image"
                 class="profile-header__plus"
               />
+            </div>
+          </div>
+          <!-- popup -->
+          <div class="popup popup_opened">
+            <div class="popup__container">
+              <img src="./images/close_icon.svg" alt="close button" class="popup__close">
+              <form action="" method="post" class="form">
+                <h2 class="form__title">Edit Profile</h2>
+                <fieldset class="form__fieldset">
+                  <!-- <label for="username" class="form__label">Username</label> -->
+                  <input
+                  type="text"
+                  class="form__input"
+                  id="username"
+                  name="username"
+                  placeholder="Name"
+                  />
+                  <!-- <label for="about" class="form__label">About</label> -->
+                  <input
+                  type="text"
+                  class="form__input"
+                  id="about"
+                  name="about"
+                  placeholder="About"
+                  />
+                </fieldset>
+                <fieldset class="form__fieldset">
+                  <button type="submit" class="form__button">Save</button>
+                </fieldset>
+              </form>
             </div>
           </div>
         </section>
@@ -173,17 +204,23 @@
           <ul class="footer__logos">
             <li>
               <a href="#" class="footer__logo-link">
-                <div class="footer__logo footer__logo_facebook footer__logo_hover"></div>
+                <div
+                  class="footer__logo footer__logo_facebook footer__logo_hover"
+                ></div>
               </a>
             </li>
             <li>
               <a href="#" class="footer__logo-link">
-                <div class="footer__logo footer__logo_instagram footer__logo_hover"></div>
+                <div
+                  class="footer__logo footer__logo_instagram footer__logo_hover"
+                ></div>
               </a>
             </li>
             <li>
               <a href="#" class="footer__logo-link">
-                <div class="footer__logo footer__logo_practicum footer__logo_hover"></div>
+                <div
+                  class="footer__logo footer__logo_practicum footer__logo_hover"
+                ></div>
               </a>
             </li>
           </ul>
