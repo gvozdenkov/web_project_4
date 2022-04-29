@@ -22,10 +22,10 @@ let profileAbout = main.querySelector(".profile-header__about");
 function toggleEditPopup() {
   if (popup.classList.contains("popup_opend")) {
     popup.classList.toggle("popup_opened");
-    body.classList.toggle('body__lock');
+    body.classList.toggle("body__lock");
     return;
   } else {
-    body.classList.toggle('body__lock');
+    body.classList.toggle("body__lock");
     popup.classList.toggle("popup_opened");
     profilePopupName.value = profileName.textContent;
     profilePopupAbout.value = profileAbout.textContent;
@@ -34,7 +34,7 @@ function toggleEditPopup() {
 
 function profileSave() {
   popup.classList.toggle("popup_opened");
-  body.classList.remove('body__lock');
+  body.classList.remove("body__lock");
 }
 
 profileEditBtn.addEventListener("click", toggleEditPopup);
@@ -49,27 +49,67 @@ let formElement = popup.querySelector(".form");
 // Next is the form submit handler, though
 // it won't submit anywhere just yet
 function handleProfileFormSubmit(evt) {
-    // console.log(profilePopupName.value);
-    // This line stops the browser from 
-    // submitting the form in the default way.
-    // Having done so, we can define our own way of submitting the form.
-    evt.preventDefault();
+  // console.log(profilePopupName.value);
+  // This line stops the browser from
+  // submitting the form in the default way.
+  // Having done so, we can define our own way of submitting the form.
+  evt.preventDefault();
 
-    profileName.textContent = profilePopupName.value;
-    profileAbout.textContent = profilePopupAbout.value;
+  profileName.textContent = profilePopupName.value;
+  profileAbout.textContent = profilePopupAbout.value;
 }
 
-formElement.addEventListener('submit', handleProfileFormSubmit);
+formElement.addEventListener("submit", handleProfileFormSubmit);
 
+// =============================================== Render Cards automatic ============================================================
 
+// temp DB amulation
+const initialCards = [
+  {
+    name: "Yosemite Valley",
+    link: "https://code.s3.yandex.net/web-code/yosemite.jpg",
+  },
+  {
+    name: "Lake Louise",
+    link: "https://code.s3.yandex.net/web-code/lake-louise.jpg",
+  },
+  {
+    name: "Bald Mountains",
+    link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg",
+  },
+  {
+    name: "Latemar",
+    link: "https://code.s3.yandex.net/web-code/latemar.jpg",
+  },
+  {
+    name: "Vanoise National Park",
+    link: "https://code.s3.yandex.net/web-code/vanoise.jpg",
+  },
+  {
+    name: "Lago di Braies",
+    link: "https://code.s3.yandex.net/web-code/lago.jpg",
+  },
+];
 
+function createCard(data) {
+  // get card template content
+  const cardTemplate = document.querySelector("#card-template").content;
 
-// =========================== gallery ============================
+  // duplicate all card template
+  const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
 
-let likeBtn = main.querySelectorAll(".card__like");
+  // insert text and img src from face DB
+  cardElement.querySelector(".card__title").textContent = data.name;
+  //   cardElement.getElementsByClassName("")
+  cardElement.querySelector(".card__img").src = data.link;
 
-// function setLike() {
-//     console.log("Like button pressed");
-// }
+  return cardElement;
+}
 
-// likeBtn.addEventListener("click", setLike);
+// get tag where insert cards
+const albumContainer = document.querySelector(".album-container");
+
+// loop throw fake DB array to generate cards and insert it
+initialCards.forEach((card) => albumContainer.prepend(createCard(card)));
+
+// ================================================================================================================================
