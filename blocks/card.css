@@ -9,9 +9,19 @@
   flex-flow: column nowrap;
 }
 
-.card__img {
+.card__img-container {
   height: 282px;
+  overflow: hidden;
+}
+
+.card__img {
+  height: 100%;
   object-fit: cover;
+  transition: transform 0.5s ease-out;
+}
+
+.card__img:hover {
+  transform: scale(1.05);
 }
 
 .card__footer {
@@ -36,9 +46,12 @@
   min-width: 21px;
   height: 19px;
   background-image: url(../images/like_inactive.svg);
+
+  transition: transform 0.15s ease-in-out;
 }
 
 .card__like:hover {
   background-image: url(../images/like_hover.svg);
   cursor: pointer;
+  transform: scale(1.2);
 }
