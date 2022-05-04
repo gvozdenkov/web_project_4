@@ -77,31 +77,34 @@
               <div class="profile-header__info">
                 <div class="profile-header__name-block">
                   <h1 class="profile-header__name">Arty Gvozdenkov</h1>
-                  <img
-                    src="./images/edit_button.svg"
-                    alt="edit profile button"
-                    class="profile-header__edit-btn profile-header__edit-btn_action_edit"
-                  />
+                  <a href="#editProfilePopup" class="popup-link">
+                    <img
+                      src="./images/edit_button.svg"
+                      alt="edit profile button"
+                      class="profile-header__edit-btn"
+                    />
+                  </a>
                 </div>
                 <p class="profile-header__about">Explorer</p>
               </div>
             </div>
-            <div class="profile-header__add-btn">
-              <img
-                src="./images/plus.svg"
-                alt="plus image"
-                class="profile-header__plus"
-              />
-            </div>
+            <a href="#addCardPopup" class="popup-link">
+              <div class="profile-header__add-btn">
+                <img
+                  src="./images/plus.svg"
+                  alt="plus image"
+                  class="profile-header__plus"
+                />
+              </div>
+            </a>
           </div>
-          <!-- popup Edit Profile-->
-          <div class="popup popup-link popup-edit-profile">
-            <div class="popup__close-area"></div>
+          <!-- popup Edit Profile -->
+          <div id="editProfilePopup" class="popup popup-edit-profile lock-padding">
             <div class="popup__container">
               <img
                 src="./images/close_icon.svg"
                 alt="close button"
-                class="popup__close"
+                class="popup__close popup-close"
               />
               <form action="" method="post" class="form">
                 <h2 class="form__title">Edit Profile</h2>
@@ -136,13 +139,12 @@
             </div>
           </div>
           <!-- popup Add Card -->
-          <div class="popup popup-link popup-add-card">
-            <div class="popup__close-area"></div>
+          <div id="addCardPopup" class="popup popup-add-card lock-padding">
             <div class="popup__container">
               <img
                 src="./images/close_icon.svg"
                 alt="close button"
-                class="popup__close"
+                class="popup__close popup-close"
               />
               <form action="" method="post" class="form">
                 <h2 class="form__title">New Place</h2>

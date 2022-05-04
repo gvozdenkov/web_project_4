@@ -2,19 +2,20 @@ let body = document.querySelector(".body");
 let main = document.querySelector(".main");
 // all popups on page
 let popupLinks = document.querySelectorAll(".popup-link");
+// all elements with position: fixed
+// for compensate hide scroll when popup opened
+let lockPaddings = document.querySelectorAll(".lock-padding");
 
 let popupEditProfile = main.querySelector(".popup-edit-profile");
 let popupAddCard = main.querySelector(".popup-add-card");
 
 // popup buttons
-let profileEditBtn = main.querySelector(
-  ".profile-header__edit-btn_action_edit"
-);
+let profileEditBtn = main.querySelector(".profile-header__edit-btn");
 let profileAddCard = main.querySelector(".profile-header__add-btn");
 let popupCloseBtn = main.querySelector(".popup__close");
 let popupCloseArea = main.querySelector(".popup__close-area");
 
-// form input fields
+// Profile form input fields
 let profilePopupName = popupEditProfile.querySelector(
   ".form__input_type_username"
 );
@@ -30,53 +31,86 @@ let profileName = main.querySelector(".profile-header__name");
 let profileAbout = main.querySelector(".profile-header__about");
 
 // ============================= POPUP FUNCTIONS =================================================
-function togglePopup(evt) {
-  if (popup.classList.contains("popup_opend")) {
-    popup.classList.toggle("popup_opened");
-    body.classList.toggle("body__lock");
-    return;
-  } else {
-    body.classList.toggle("body__lock");
-    popup.classList.toggle("popup_opened");
-    profilePopupName.value = profileName.textContent;
-    profilePopupAbout.value = profileAbout.textContent;
+if (popupLinks.length > 0) {
+  for (let i = 0; i < popupLinks.length; i++) {
+    const popupLink = popupLinks[i];
+    popupLink.addEventListener("click", function (evt) {
+      const popupName = popupLink.getAttribute("href").replace("#", "");
+      const currentPopup = document.getElementById(popupName);
+      popupOpen(currentPopup);
+      //   disable default link actions
+      evt.preventDefault();
+    });
   }
+}
+
+const popupCloseIcons = document.querySelectorAll(".popup-close");
+if (popupCloseIcons.length > 0) {
+  for (let i = 0; i < popupCloseIcons.length; i++) {
+    const el = popupCloseIcons[i];
+    el.addEventListener("click", function (evt) {
+      // find closest element with .popup for close
+      popupClose(el.closest(".popup"));
+      evt.preventDefault();
+    });
+  }
+}
+
+function popupOpen(popup) {
+  popup.classList.add("popup_opened");
+  bodyLock();
+  profilePopupName.value = profileName.textContent;
+  profilePopupAbout.value = profileAbout.textContent;
+  // assign listener for .popup div - for close everywhare
+  popup.addEventListener("click", function (evt) {
+    // if click outside .popup__container -> close popup
+    if (!evt.target.closest(".popup__container")) {
+      // find closest .popup for close
+      popupClose(evt.target.closest(".popup"));
+    }
+  });
+}
+
+function popupClose(popup) {
+  popup.classList.remove("popup_opened");
+  bodyUnLock();
 }
 
 function profileSave() {
   popupEditProfile.classList.toggle("popup_opened");
-  body.classList.remove("body__lock");
+  bodyUnLock();
 }
 
 function AddCardSave() {
   popupAddCard.classList.toggle("popup_opened");
-  body.classList.remove("body__lock");
+  bodyUnLock();
 }
 
-// =========================== POPUP LISTENERS ===============================================
-//  === Edit Profile ===
-profileEditBtn.addEventListener("click", function (evt) {
-  togglePopup(evt);
-});
-popupCloseBtn.addEventListener("click", function () {
-  togglePopup(popupEditProfile);
-});
-popupCloseArea.addEventListener("click", function () {
-  togglePopup(popupEditProfile);
-});
-profilePopupSave.addEventListener("click", profileSave);
+function bodyLock() {
+  const lockPaddingValue =
+    window.innerWidth - document.querySelector(".body").offsetWidth + "px";
 
-// === Add Card ===
-profileAddCard.addEventListener("click", function (evt) {
-  console.log(evt.target);
-});
-popupCloseBtn.addEventListener("click", function () {
-  togglePopup(popupAddCard);
-});
-popupCloseArea.addEventListener("click", function () {
-  togglePopup(popupAddCard);
-});
-profilePopupSave.addEventListener("click", AddCardSave);
+  // for all position:fixed elements add paddingRight
+  if (lockPaddings.length > 0) {
+    for (let i = 0; i < lockPaddings.length; i++) {
+      lockPaddings[i].style.paddingRight = lockPaddingValue;
+    }
+  }
+
+  body.classList.add("body_lock");
+  body.style.paddingRight = lockPaddingValue;
+}
+
+function bodyUnLock() {
+  body.style.paddingRight = 0;
+  // for all position:fixed elements add paddingRight
+  if (lockPaddings.length > 0) {
+    for (let i = 0; i < lockPaddings.length; i++) {
+      lockPaddings[i].style.paddingRight = 0;
+    }
+  }
+  body.classList.remove("body_lock");
+}
 
 // ==================== profile popup save button ==============================================
 
@@ -93,6 +127,7 @@ function handleProfileFormSubmit(evt) {
 
   profileName.textContent = profilePopupName.value;
   profileAbout.textContent = profilePopupAbout.value;
+  popupClose(evt.target.closest(".popup"));
 }
 
 formElement.addEventListener("submit", handleProfileFormSubmit);
