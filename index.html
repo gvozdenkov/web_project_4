@@ -94,8 +94,8 @@
               />
             </div>
           </div>
-          <!-- popup -->
-          <div class="popup">
+          <!-- popup Edit Profile-->
+          <div class="popup popup-link popup-edit-profile">
             <div class="popup__close-area"></div>
             <div class="popup__container">
               <img
@@ -122,6 +122,48 @@
                     id="about"
                     name="about"
                     placeholder="About me"
+                  />
+                </fieldset>
+                <fieldset class="form__fieldset">
+                  <button
+                    type="submit"
+                    class="form__button form__button_action_save"
+                  >
+                    Save
+                  </button>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+          <!-- popup Add Card -->
+          <div class="popup popup-link popup-add-card">
+            <div class="popup__close-area"></div>
+            <div class="popup__container">
+              <img
+                src="./images/close_icon.svg"
+                alt="close button"
+                class="popup__close"
+              />
+              <form action="" method="post" class="form">
+                <h2 class="form__title">New Place</h2>
+                <fieldset class="form__fieldset">
+                  <!-- <label for="username" class="form__label">Username</label> -->
+                  <input
+                    type="text"
+                    class="form__input form__input_type_username"
+                    id="title"
+                    name="title"
+                    placeholder="Tilte"
+                    required
+                  />
+                  <!-- <label for="about" class="form__label">About</label> -->
+                  <input
+                    type="url"
+                    class="form__input form__input_type_url"
+                    id="img_url"
+                    name="img_url"
+                    placeholder="Image URL"
+                    required
                   />
                 </fieldset>
                 <fieldset class="form__fieldset">

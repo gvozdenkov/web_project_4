@@ -1,25 +1,36 @@
 let body = document.querySelector(".body");
 let main = document.querySelector(".main");
+// all popups on page
+let popupLinks = document.querySelectorAll(".popup-link");
 
-let popup = main.querySelector(".popup");
+let popupEditProfile = main.querySelector(".popup-edit-profile");
+let popupAddCard = main.querySelector(".popup-add-card");
 
 // popup buttons
 let profileEditBtn = main.querySelector(
   ".profile-header__edit-btn_action_edit"
 );
-let profileEditPopupCloseBtn = main.querySelector(".popup__close");
-let profileEditPopupCloseArea = main.querySelector(".popup__close-area");
+let profileAddCard = main.querySelector(".profile-header__add-btn");
+let popupCloseBtn = main.querySelector(".popup__close");
+let popupCloseArea = main.querySelector(".popup__close-area");
 
 // form input fields
-let profilePopupName = popup.querySelector(".form__input_type_username");
-let profilePopupAbout = popup.querySelector(".form__input_type_about");
-let profilePopupSave = popup.querySelector(".form__button_action_save");
+let profilePopupName = popupEditProfile.querySelector(
+  ".form__input_type_username"
+);
+let profilePopupAbout = popupEditProfile.querySelector(
+  ".form__input_type_about"
+);
+let profilePopupSave = popupEditProfile.querySelector(
+  ".form__button_action_save"
+);
 
 // profile html page Name and About
 let profileName = main.querySelector(".profile-header__name");
 let profileAbout = main.querySelector(".profile-header__about");
 
-function toggleEditPopup() {
+// ============================= POPUP FUNCTIONS =================================================
+function togglePopup(evt) {
   if (popup.classList.contains("popup_opend")) {
     popup.classList.toggle("popup_opened");
     body.classList.toggle("body__lock");
@@ -33,18 +44,43 @@ function toggleEditPopup() {
 }
 
 function profileSave() {
-  popup.classList.toggle("popup_opened");
+  popupEditProfile.classList.toggle("popup_opened");
   body.classList.remove("body__lock");
 }
 
-profileEditBtn.addEventListener("click", toggleEditPopup);
-profileEditPopupCloseBtn.addEventListener("click", toggleEditPopup);
-profileEditPopupCloseArea.addEventListener("click", toggleEditPopup);
+function AddCardSave() {
+  popupAddCard.classList.toggle("popup_opened");
+  body.classList.remove("body__lock");
+}
+
+// =========================== POPUP LISTENERS ===============================================
+//  === Edit Profile ===
+profileEditBtn.addEventListener("click", function (evt) {
+  togglePopup(evt);
+});
+popupCloseBtn.addEventListener("click", function () {
+  togglePopup(popupEditProfile);
+});
+popupCloseArea.addEventListener("click", function () {
+  togglePopup(popupEditProfile);
+});
 profilePopupSave.addEventListener("click", profileSave);
 
-// ===== profile popup save button ===========
+// === Add Card ===
+profileAddCard.addEventListener("click", function (evt) {
+  console.log(evt.target);
+});
+popupCloseBtn.addEventListener("click", function () {
+  togglePopup(popupAddCard);
+});
+popupCloseArea.addEventListener("click", function () {
+  togglePopup(popupAddCard);
+});
+profilePopupSave.addEventListener("click", AddCardSave);
 
-let formElement = popup.querySelector(".form");
+// ==================== profile popup save button ==============================================
+
+let formElement = popupEditProfile.querySelector(".form");
 
 // Next is the form submit handler, though
 // it won't submit anywhere just yet
@@ -61,7 +97,7 @@ function handleProfileFormSubmit(evt) {
 
 formElement.addEventListener("submit", handleProfileFormSubmit);
 
-// =============================================== Render Cards automatic ============================================================
+// ============================ Render Cards automatic ===========================================
 
 // temp DB amulation
 const initialCards = [
@@ -112,4 +148,4 @@ const albumContainer = document.querySelector(".album-container");
 // loop throw fake DB array to generate cards and insert it
 initialCards.forEach((card) => albumContainer.prepend(createCard(card)));
 
-// ================================================================================================================================
+// =============================================================================================
