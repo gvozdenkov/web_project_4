@@ -182,3 +182,14 @@ function createCard(data) {
 initialCards.forEach((card) => albumContainer.prepend(createCard(card)));
 
 // =============================================================================================
+// =================== Like buttons =============================================================
+
+let likeButtons = document.querySelectorAll(".card__like");
+if (likeButtons.length > 0) {
+  for (let i = 0; i < likeButtons.length; i++) {
+    const like = likeButtons[i];
+    like.addEventListener("click", (evt) =>
+      evt.target.classList.toggle("card__like_type_active")
+    );
+  }
+}
