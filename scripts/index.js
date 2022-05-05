@@ -6,14 +6,11 @@ let popupLinks = document.querySelectorAll(".popup-link");
 // for compensate hide scroll when popup opened
 let lockPaddings = document.querySelectorAll(".lock-padding");
 
+// get tag where insert cards
+const albumContainer = document.querySelector(".album-container");
+
 let popupEditProfile = main.querySelector(".popup-edit-profile");
 let popupAddCard = main.querySelector(".popup-add-card");
-
-// popup buttons
-let profileEditBtn = main.querySelector(".profile-header__edit-btn");
-let profileAddCard = main.querySelector(".profile-header__add-btn");
-let popupCloseBtn = main.querySelector(".popup__close");
-let popupCloseArea = main.querySelector(".popup__close-area");
 
 // Profile form input fields
 let profilePopupName = popupEditProfile.querySelector(
@@ -30,6 +27,13 @@ let profilePopupSave = popupEditProfile.querySelector(
 let profileName = main.querySelector(".profile-header__name");
 let profileAbout = main.querySelector(".profile-header__about");
 
+profilePopupName.value = profileName.textContent;
+profilePopupAbout.value = profileAbout.textContent;
+
+// Add Card input fields
+popupAddCard.querySelector(".add-card-name").value = "";
+popupAddCard.querySelector(".add-card-url").value = "";
+
 // ============================= POPUP FUNCTIONS =================================================
 if (popupLinks.length > 0) {
   for (let i = 0; i < popupLinks.length; i++) {
@@ -38,7 +42,7 @@ if (popupLinks.length > 0) {
       const popupName = popupLink.getAttribute("href").replace("#", "");
       const currentPopup = document.getElementById(popupName);
       popupOpen(currentPopup);
-      //   disable default link actions
+      // disable default link actions
       evt.preventDefault();
     });
   }
@@ -59,8 +63,6 @@ if (popupCloseIcons.length > 0) {
 function popupOpen(popup) {
   popup.classList.add("popup_opened");
   bodyLock();
-  profilePopupName.value = profileName.textContent;
-  profilePopupAbout.value = profileAbout.textContent;
   // assign listener for .popup div - for close everywhare
   popup.addEventListener("click", function (evt) {
     // if click outside .popup__container -> close popup
@@ -76,14 +78,25 @@ function popupClose(popup) {
   bodyUnLock();
 }
 
-function profileSave() {
-  popupEditProfile.classList.toggle("popup_opened");
-  bodyUnLock();
+function PopupSaveProfile(evt) {
+  evt.preventDefault();
+  profileName.textContent = profilePopupName.value;
+  profileAbout.textContent = profilePopupAbout.value;
+  popupClose(evt.target.closest(".popup"));
 }
 
-function AddCardSave() {
-  popupAddCard.classList.toggle("popup_opened");
-  bodyUnLock();
+function PopupSaveCard(evt) {
+  evt.preventDefault();
+  cardTitle = evt.target.querySelector(".add-card-name").value;
+  cardUrl = evt.target.querySelector(".add-card-url").value;
+  const card = {
+    name: cardTitle,
+    link: cardUrl,
+  };
+  albumContainer.prepend(createCard(card));
+  popupClose(evt.target.closest(".popup"));
+  evt.target.querySelector(".add-card-name").value = "";
+  evt.target.querySelector(".add-card-url").value = "";
 }
 
 function bodyLock() {
@@ -113,24 +126,12 @@ function bodyUnLock() {
 }
 
 // ==================== profile popup save button ==============================================
-
 let formElement = popupEditProfile.querySelector(".form");
+formElement.addEventListener("submit", PopupSaveProfile);
 
-// Next is the form submit handler, though
-// it won't submit anywhere just yet
-function handleProfileFormSubmit(evt) {
-  // console.log(profilePopupName.value);
-  // This line stops the browser from
-  // submitting the form in the default way.
-  // Having done so, we can define our own way of submitting the form.
-  evt.preventDefault();
-
-  profileName.textContent = profilePopupName.value;
-  profileAbout.textContent = profilePopupAbout.value;
-  popupClose(evt.target.closest(".popup"));
-}
-
-formElement.addEventListener("submit", handleProfileFormSubmit);
+// =================== add card popup save button =====================================================
+let cardAddForm = popupAddCard.querySelector(".form");
+cardAddForm.addEventListener("submit", PopupSaveCard);
 
 // ============================ Render Cards automatic ===========================================
 
@@ -176,9 +177,6 @@ function createCard(data) {
 
   return cardElement;
 }
-
-// get tag where insert cards
-const albumContainer = document.querySelector(".album-container");
 
 // loop throw fake DB array to generate cards and insert it
 initialCards.forEach((card) => albumContainer.prepend(createCard(card)));
