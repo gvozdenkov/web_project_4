@@ -35,30 +35,25 @@ popupAddCard.querySelector(".add-card-name").value = "";
 popupAddCard.querySelector(".add-card-url").value = "";
 
 // ============================= POPUP FUNCTIONS =================================================
-if (popupLinks.length > 0) {
-  for (let i = 0; i < popupLinks.length; i++) {
-    const popupLink = popupLinks[i];
-    popupLink.addEventListener("click", function (evt) {
-      const popupName = popupLink.getAttribute("href").replace("#", "");
-      const currentPopup = document.getElementById(popupName);
-      popupOpen(currentPopup);
-      // disable default link actions
-      evt.preventDefault();
-    });
-  }
-}
+// add listener for all popupLinks - (<a></a> link for open popup)
+popupLinks.forEach((elem) => {
+  elem.addEventListener("click", function (evt) {
+    const popupName = elem.getAttribute("href").replace("#", "");
+    const currentPopup = document.getElementById(popupName);
+    popupOpen(currentPopup);
+    evt.preventDefault();
+  });
+});
 
-const popupCloseIcons = document.querySelectorAll(".popup-close");
-if (popupCloseIcons.length > 0) {
-  for (let i = 0; i < popupCloseIcons.length; i++) {
-    const el = popupCloseIcons[i];
-    el.addEventListener("click", function (evt) {
-      // find closest element with .popup for close
-      popupClose(el.closest(".popup"));
-      evt.preventDefault();
-    });
-  }
-}
+// add listener click for all .popup-close elements (crosses)
+// cacth elem via event obj and execute popupClose func
+// send closest .popup elem - top elem of active popup
+document.querySelectorAll(".popup-close").forEach((elem) => {
+  elem.addEventListener("click", function (evt) {
+    popupClose(elem.closest(".popup"));
+    evt.preventDefault();
+  });
+});
 
 function popupOpen(popup) {
   popup.classList.add("popup_opened");
@@ -94,6 +89,10 @@ function PopupSaveCard(evt) {
     link: cardUrl,
   };
   albumContainer.prepend(createCard(card));
+  //   evt.target.addEventListener("click", (evt) =>
+  //     evt.target.classList.toggle("card__like_type_active")
+  //   );
+  console.log(evt.target);
   popupClose(evt.target.closest(".popup"));
   evt.target.querySelector(".add-card-name").value = "";
   evt.target.querySelector(".add-card-url").value = "";
@@ -104,12 +103,7 @@ function bodyLock() {
     window.innerWidth - document.querySelector(".body").offsetWidth + "px";
 
   // for all position:fixed elements add paddingRight
-  if (lockPaddings.length > 0) {
-    for (let i = 0; i < lockPaddings.length; i++) {
-      lockPaddings[i].style.paddingRight = lockPaddingValue;
-    }
-  }
-
+  lockPaddings.forEach((elem) => (elem.style.paddingRight = lockPaddingValue));
   body.classList.add("body_lock");
   body.style.paddingRight = lockPaddingValue;
 }
@@ -117,11 +111,7 @@ function bodyLock() {
 function bodyUnLock() {
   body.style.paddingRight = 0;
   // for all position:fixed elements add paddingRight
-  if (lockPaddings.length > 0) {
-    for (let i = 0; i < lockPaddings.length; i++) {
-      lockPaddings[i].style.paddingRight = 0;
-    }
-  }
+  lockPaddings.forEach((elem) => (elem.style.paddingRight = 0));
   body.classList.remove("body_lock");
 }
 
@@ -182,14 +172,9 @@ function createCard(data) {
 initialCards.forEach((card) => albumContainer.prepend(createCard(card)));
 
 // =============================================================================================
-// =================== Like buttons =============================================================
-
-let likeButtons = document.querySelectorAll(".card__like");
-if (likeButtons.length > 0) {
-  for (let i = 0; i < likeButtons.length; i++) {
-    const like = likeButtons[i];
-    like.addEventListener("click", (evt) =>
-      evt.target.classList.toggle("card__like_type_active")
-    );
-  }
-}
+// =================== Like buttons ============================================================
+document.querySelectorAll(".card__like").forEach((like) => {
+  like.addEventListener("click", (evt) =>
+    evt.target.classList.toggle("card__like_type_active")
+  );
+});
