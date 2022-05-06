@@ -98,18 +98,12 @@ function PopupSaveCard(evt) {
   evt.target.querySelector(".add-card-url").value = "";
 }
 
-function newLikeListener(like) {
-    like.addEventListener("click", () =>
-    like.classList.toggle("card__like_type_active")
-  );
-}
-
 function bodyLock() {
   const lockPaddingValue =
     window.innerWidth - document.querySelector(".body").offsetWidth + "px";
 
   // for all position:fixed elements add paddingRight
-  lockPaddings.forEach((elem) => elem.style.paddingRight = lockPaddingValue);
+  lockPaddings.forEach((elem) => (elem.style.paddingRight = lockPaddingValue));
   body.classList.add("body_lock");
   body.style.paddingRight = lockPaddingValue;
 }
@@ -117,7 +111,7 @@ function bodyLock() {
 function bodyUnLock() {
   body.style.paddingRight = 0;
   // for all position:fixed elements add paddingRight
-  lockPaddings.forEach((elem) => elem.style.paddingRight = 0);
+  lockPaddings.forEach((elem) => (elem.style.paddingRight = 0));
   body.classList.remove("body_lock");
 }
 
@@ -171,6 +165,11 @@ function createCard(data) {
   //   cardElement.getElementsByClassName("")
   cardElement.querySelector(".card__img").src = data.link;
 
+  // add event listener for .card__dell trash icon to del card
+  cardElement
+    .querySelector(".card__del")
+    .addEventListener("click", (evt) => evt.target.closest(".card").remove());
+
   return cardElement;
 }
 
@@ -178,5 +177,13 @@ function createCard(data) {
 initialCards.forEach((card) => albumContainer.prepend(createCard(card)));
 
 // =============================================================================================
-// =================== Like buttons ============================================================
-document.querySelectorAll(".card__like").forEach((like) => newLikeListener(like));
+// =================== Card Like buttons ============================================================
+function newLikeListener(like) {
+  like.addEventListener("click", () =>
+    like.classList.toggle("card__like_type_active")
+  );
+}
+
+document
+  .querySelectorAll(".card__like")
+  .forEach((like) => newLikeListener(like));
