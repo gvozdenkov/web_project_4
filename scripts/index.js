@@ -89,13 +89,19 @@ function PopupSaveCard(evt) {
     link: cardUrl,
   };
   albumContainer.prepend(createCard(card));
-  //   evt.target.addEventListener("click", (evt) =>
-  //     evt.target.classList.toggle("card__like_type_active")
-  //   );
-  console.log(evt.target);
+
+  const newLike = albumContainer.querySelector(".card__like");
+  newLikeListener(newLike);
+
   popupClose(evt.target.closest(".popup"));
   evt.target.querySelector(".add-card-name").value = "";
   evt.target.querySelector(".add-card-url").value = "";
+}
+
+function newLikeListener(like) {
+    like.addEventListener("click", () =>
+    like.classList.toggle("card__like_type_active")
+  );
 }
 
 function bodyLock() {
@@ -103,7 +109,7 @@ function bodyLock() {
     window.innerWidth - document.querySelector(".body").offsetWidth + "px";
 
   // for all position:fixed elements add paddingRight
-  lockPaddings.forEach((elem) => (elem.style.paddingRight = lockPaddingValue));
+  lockPaddings.forEach((elem) => elem.style.paddingRight = lockPaddingValue);
   body.classList.add("body_lock");
   body.style.paddingRight = lockPaddingValue;
 }
@@ -111,7 +117,7 @@ function bodyLock() {
 function bodyUnLock() {
   body.style.paddingRight = 0;
   // for all position:fixed elements add paddingRight
-  lockPaddings.forEach((elem) => (elem.style.paddingRight = 0));
+  lockPaddings.forEach((elem) => elem.style.paddingRight = 0);
   body.classList.remove("body_lock");
 }
 
@@ -173,8 +179,4 @@ initialCards.forEach((card) => albumContainer.prepend(createCard(card)));
 
 // =============================================================================================
 // =================== Like buttons ============================================================
-document.querySelectorAll(".card__like").forEach((like) => {
-  like.addEventListener("click", (evt) =>
-    evt.target.classList.toggle("card__like_type_active")
-  );
-});
+document.querySelectorAll(".card__like").forEach((like) => newLikeListener(like));
