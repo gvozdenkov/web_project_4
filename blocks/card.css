@@ -7,6 +7,7 @@
 
   display: flex;
   flex-flow: column nowrap;
+  position: relative;
 }
 
 .card__img-container {
@@ -22,6 +23,24 @@
 
 .card__img:hover {
   transform: scale(1.05);
+}
+
+.card__del {
+  background-image: url(../images/trash_active.svg);
+  background-repeat: no-repeat;
+  width: 18px;
+  height: 19px;
+  top: 20px;
+  right: 15px;
+  position: absolute;
+  opacity: 0.5;
+  z-index: 1;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.card__del:hover {
+  opacity: 1;
+  cursor: pointer;
 }
 
 .card__footer {
