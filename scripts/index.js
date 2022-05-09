@@ -80,24 +80,18 @@ function createCard(data) {
     .querySelector(".card__del")
     .addEventListener("click", (evt) => evt.target.closest(".card").remove());
 
+  // listener for like button
+  cardElement
+    .querySelector(".card__like")
+    .addEventListener("click", (evt) =>
+      evt.target.classList.toggle("card__like_type_active")
+    );
+
   return cardElement;
 }
 
 // loop throw fake DB array to generate cards and insert it
 initialCards.forEach((card) => albumContainer.prepend(createCard(card)));
-
-// =================== Card Like buttons ============================================================
-function newLikeListener(like) {
-  like.addEventListener("click", () =>
-    like.classList.toggle("card__like_type_active")
-  );
-}
-
-document
-  .querySelectorAll(".card__like")
-  .forEach((like) => newLikeListener(like));
-
-// =============================================================================================
 
 // ============================= POPUP FUNCTIONS =================================================
 function popupOpen(popup) {
@@ -121,7 +115,7 @@ function popupOpen(popup) {
 
 function popupClose(popup) {
   popup.classList.remove("popup_opened");
-    // delete pupup element from the page
+  // delete pupup element from the page
   bodyUnLock();
 }
 
@@ -151,17 +145,11 @@ function createCardPopup(data) {
 
 function PopupSaveCard(evt) {
   evt.preventDefault();
-  cardTitle = evt.target.querySelector(".add-card-name").value;
-  cardUrl = evt.target.querySelector(".add-card-url").value;
   const card = {
-    name: cardTitle,
-    link: cardUrl,
+    name: evt.target.querySelector(".add-card-name").value,
+    link: evt.target.querySelector(".add-card-url").value,
   };
   albumContainer.prepend(createCard(card));
-
-  // add event listener for .card__like (like button)
-  const newLike = albumContainer.querySelector(".card__like");
-  newLikeListener(newLike);
 
   // add event listener for card image popup
   const newImgPopupLink = albumContainer.querySelector(".popup-link");
@@ -209,7 +197,7 @@ let popupLinks = document.querySelectorAll(".popup-link");
 // add listener for all popupLinks - (<a></a> link for open popup)
 popupLinks.forEach((elem) => {
   elem.addEventListener("click", function (evt) {
-    //   create img popup from template
+    // create img popup from template
     let popupName = elem.getAttribute("href").replace("#", "");
     let currentPopup = document.getElementById(popupName);
     if (currentPopup) {
@@ -231,15 +219,5 @@ popupLinks.forEach((elem) => {
       popupOpen(currentPopup);
       evt.preventDefault();
     }
-  });
-});
-
-// add listener click for all .popup-close elements (crosses)
-// cacth elem via event obj and execute popupClose func
-// send closest .popup elem - top elem of active popup
-document.querySelectorAll(".popup-close").forEach((elem) => {
-  elem.addEventListener("click", function (evt) {
-    popupClose(elem.closest(".popup"));
-    evt.preventDefault();
   });
 });
