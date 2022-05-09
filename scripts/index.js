@@ -111,10 +111,17 @@ function popupOpen(popup) {
       popupClose(evt.target.closest(".popup"));
     }
   });
+
+  const closeIcon = popup.querySelector(".popup-close");
+  closeIcon.addEventListener("click", (evt) => {
+    popupClose(closeIcon.closest(".popup"));
+    evt.preventDefault();
+  });
 }
 
 function popupClose(popup) {
   popup.classList.remove("popup_opened");
+    // delete pupup element from the page
   bodyUnLock();
 }
 
@@ -123,6 +130,23 @@ function PopupSaveProfile(evt) {
   profileName.textContent = profilePopupName.value;
   profileAbout.textContent = profilePopupAbout.value;
   popupClose(evt.target.closest(".popup"));
+}
+
+function createCardPopup(data) {
+  // get card template content
+  const cardImgPopupTemplate = document.querySelector(
+    "#card-popup-image-template"
+  ).content;
+
+  // duplicate all card template
+  const imgPopup = cardImgPopupTemplate.querySelector(".popup").cloneNode(true);
+
+  // insert text and img src from face DB
+  imgPopup.querySelector(".popup__img-title").textContent = data.name;
+  //   cardElement.getElementsByClassName("")
+  imgPopup.querySelector(".popup__img").src = data.link;
+
+  return imgPopup;
 }
 
 function PopupSaveCard(evt) {
@@ -141,7 +165,7 @@ function PopupSaveCard(evt) {
 
   // add event listener for card image popup
   const newImgPopupLink = albumContainer.querySelector(".popup-link");
-  newImgPopupLink.addEventListener("click", () => {
+  newImgPopupLink.addEventListener("click", (evt) => {
     const popupName = newImgPopupLink.getAttribute("href").replace("#", "");
     const currentPopup = document.getElementById(popupName);
     popupOpen(currentPopup);
@@ -178,16 +202,35 @@ formElement.addEventListener("submit", PopupSaveProfile);
 let cardAddForm = popupAddCard.querySelector(".form");
 cardAddForm.addEventListener("submit", PopupSaveCard);
 
-// all popups on page
+// all popups on page in the begining
 let popupLinks = document.querySelectorAll(".popup-link");
+// console.log(popupLinks);
 
 // add listener for all popupLinks - (<a></a> link for open popup)
 popupLinks.forEach((elem) => {
   elem.addEventListener("click", function (evt) {
-    const popupName = elem.getAttribute("href").replace("#", "");
-    const currentPopup = document.getElementById(popupName);
-    popupOpen(currentPopup);
-    evt.preventDefault();
+    //   create img popup from template
+    let popupName = elem.getAttribute("href").replace("#", "");
+    let currentPopup = document.getElementById(popupName);
+    if (currentPopup) {
+      popupOpen(currentPopup);
+      evt.preventDefault();
+    } else {
+      // if no popup - create popup for card image from template
+      const imgUrl = evt.target.src;
+      const imgTitle = evt.target
+        .closest(".card")
+        .querySelector(".card__title").textContent;
+      const popupData = {
+        name: imgTitle,
+        link: imgUrl,
+      };
+      main.append(createCardPopup(popupData));
+      currentPopup = document.getElementById(popupName);
+      //   console.log(`after creating - ${currentPopup}`);
+      popupOpen(currentPopup);
+      evt.preventDefault();
+    }
   });
 });
 

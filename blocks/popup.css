@@ -60,13 +60,19 @@
   transform: rotate(90deg);
 }
 
-.popup__image {
+.popup__img-cnt {
   display: flex;
 }
 
-.popup__image img {
+.popup__img {
   object-fit: cover;
   position: relative;
+}
+
+.popup__img-title {
+  position: absolute;
+  bottom: -30px;
+  left: 0;
 }
 
 @media (max-width: 768px) {
