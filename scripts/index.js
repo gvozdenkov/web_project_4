@@ -60,8 +60,8 @@ function popupOpen(popup) {
   bodyLock();
   // assign listener for .popup div - for close everywhare
   popup.addEventListener("click", function (evt) {
-    // if click outside .popup__container -> close popup
-    if (!evt.target.closest(".popup__container")) {
+    // if click outside .popup__content -> close popup
+    if (!evt.target.closest(".popup__content")) {
       // find closest .popup for close
       popupClose(evt.target.closest(".popup"));
     }
