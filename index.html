@@ -99,7 +99,10 @@
             </a>
           </div>
           <!-- popup Edit Profile -->
-          <div id="editProfilePopup" class="popup popup-edit-profile lock-padding">
+          <div
+            id="editProfilePopup"
+            class="popup popup-edit-profile lock-padding"
+          >
             <div class="popup__body">
               <div class="popup__content">
                 <img
@@ -186,19 +189,19 @@
         </section>
         <!-- album section -->
         <section class="album">
-          <div class="album-container">
-            
-          </div>
+          <div class="album-container"></div>
           <!-- card template -->
           <template id="card-template">
             <article class="card">
               <div class="card__del"></div>
               <div class="card__img-container">
-                <img
-                  src="./images/placeholder_img_512x384.png"
-                  alt="card image"
-                  class="card__img"
-                />
+                <a href="#popup-img" class="popup-link">
+                  <img
+                    src="./images/placeholder_img_512x384.png"
+                    alt="card image"
+                    class="card__img"
+                  />
+                </a>
               </div>
               <div class="card__footer">
                 <p class="card__title">Lake Louse awesome place</p>
@@ -207,22 +210,44 @@
             </article>
           </template>
         </section>
-        <!-- TEST -->
-        <a href="#popupImg" class="popup-link">open popup image</a>
-        <div class="popup" id="popupImg">
+        <!-- card image popup template -->
+        <div class="popup" id="popup-img">
           <div class="popup__body">
             <div class="popup__content popup__content_img">
               <img
+                src="./images/close_icon.svg"
+                alt="close button"
+                class="popup__close popup-close"
+              />
+              <div class="popup__image">
+                <img
+                  src="https://code.s3.yandex.net/web-code/bald-mountains.jpg"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <template id="card-popup-image-template">
+          <div class="popup" id="popup-img">
+            <div class="popup__body">
+              <div class="popup__content popup__content_img">
+                <img
                   src="./images/close_icon.svg"
                   alt="close button"
                   class="popup__close popup-close"
                 />
                 <div class="popup__image">
-                  <img src="https://code.s3.yandex.net/web-code/bald-mountains.jpg" alt="">
+                  <img
+                    src="https://code.s3.yandex.net/web-code/bald-mountains.jpg"
+                    alt=""
+                  />
                 </div>
+              </div>
             </div>
           </div>
-        </div>
+        </template>
       </main>
       <!-- footer -->
       <footer class="footer">
@@ -252,7 +277,7 @@
             </li>
           </ul>
         </div>
-      </footer> 
+      </footer>
     </div>
     <script src="./scripts/index.js"></script>
   </body>

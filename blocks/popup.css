@@ -40,7 +40,6 @@
 
 .popup__content_img {
   padding: 5px;
-  /* min-width: 75vw; */
   max-width: 75vw;
   max-height: 75vh;
   display: flex;
