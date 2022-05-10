@@ -91,17 +91,17 @@ function createCard(data) {
   const popupLink = cardElement.querySelector(".popup-link");
   popupLink.addEventListener("click", (evt) => {
     const popupName = popupLink.getAttribute("href").replace("#", "");
-    // create popup from template
+    currentPopup = document.getElementById(popupName);
+    // fill popup with actual data
     const imgUrl = evt.target.src;
     const imgTitle = evt.target
       .closest(".card")
       .querySelector(".card__title").textContent;
-    const popupData = {
-      name: imgTitle,
-      link: imgUrl,
-    };
-    main.append(createCardPopup(popupData));
-    currentPopup = document.getElementById(popupName);
+
+    const cardPopupElement = document.getElementById("popup-img");
+    console.log(cardPopupElement);
+    cardPopupElement.querySelector(".popup__img").src = imgUrl;
+    cardPopupElement.querySelector(".popup__img-title").textContent = imgTitle;
     popupOpen(currentPopup);
     evt.preventDefault();
   });
@@ -135,7 +135,7 @@ function popupOpen(popup) {
 function popupClose(popup) {
   popup.classList.remove("popup_opened");
   // delete pupup element from the page if this is image card popup
-  if (popup.id.includes("popup-img")) popup.remove();
+  //   if (popup.id.includes("popup-img")) popup.remove();
   bodyUnLock();
 }
 
@@ -203,7 +203,7 @@ cardAddForm.addEventListener("submit", PopupSaveCard);
 
 // all popups on page in the begining
 let popupLinks = document.querySelectorAll(".popup-link");
-// add listener for all popupLinks exept img popups - (<a></a> link for open popup)
+// add listener for all popupLinks except img popups - (<a></a> link for open popup)
 popupLinks.forEach((elem) => {
   // create listener only for non card popup links
   if (!elem.href.includes("popup-img")) {
