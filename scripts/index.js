@@ -33,7 +33,7 @@ profilePopupAbout.value = profileAbout.textContent;
 popupAddCard.querySelector(".add-card-name").value = "";
 popupAddCard.querySelector(".add-card-url").value = "";
 
-// ============================ Render Cards automatic ===========================================
+// ============================ Render Cards from DB ===========================================
 
 // temp DB amulation
 const initialCards = [
@@ -87,6 +87,25 @@ function createCard(data) {
       evt.target.classList.toggle("card__like_type_active")
     );
 
+  // add event listener for card image popup
+  const popupLink = cardElement.querySelector(".popup-link");
+  popupLink.addEventListener("click", (evt) => {
+    const popupName = popupLink.getAttribute("href").replace("#", "");
+    // create popup from template
+    const imgUrl = evt.target.src;
+    const imgTitle = evt.target
+      .closest(".card")
+      .querySelector(".card__title").textContent;
+    const popupData = {
+      name: imgTitle,
+      link: imgUrl,
+    };
+    main.append(createCardPopup(popupData));
+    currentPopup = document.getElementById(popupName);
+    popupOpen(currentPopup);
+    evt.preventDefault();
+  });
+
   return cardElement;
 }
 
@@ -115,7 +134,8 @@ function popupOpen(popup) {
 
 function popupClose(popup) {
   popup.classList.remove("popup_opened");
-  // delete pupup element from the page
+  // delete pupup element from the page if this is image card popup
+  if (popup.id.includes("popup-img")) popup.remove();
   bodyUnLock();
 }
 
@@ -151,15 +171,6 @@ function PopupSaveCard(evt) {
   };
   albumContainer.prepend(createCard(card));
 
-  // add event listener for card image popup
-  const newImgPopupLink = albumContainer.querySelector(".popup-link");
-  newImgPopupLink.addEventListener("click", (evt) => {
-    const popupName = newImgPopupLink.getAttribute("href").replace("#", "");
-    const currentPopup = document.getElementById(popupName);
-    popupOpen(currentPopup);
-    evt.preventDefault();
-  });
-
   popupClose(evt.target.closest(".popup"));
   evt.target.querySelector(".add-card-name").value = "";
   evt.target.querySelector(".add-card-url").value = "";
@@ -192,32 +203,15 @@ cardAddForm.addEventListener("submit", PopupSaveCard);
 
 // all popups on page in the begining
 let popupLinks = document.querySelectorAll(".popup-link");
-// console.log(popupLinks);
-
-// add listener for all popupLinks - (<a></a> link for open popup)
+// add listener for all popupLinks exept img popups - (<a></a> link for open popup)
 popupLinks.forEach((elem) => {
-  elem.addEventListener("click", function (evt) {
-    // create img popup from template
-    let popupName = elem.getAttribute("href").replace("#", "");
-    let currentPopup = document.getElementById(popupName);
-    if (currentPopup) {
+  // create listener only for non card popup links
+  if (!elem.href.includes("popup-img")) {
+    elem.addEventListener("click", (evt) => {
+      let popupName = elem.getAttribute("href").replace("#", "");
+      let currentPopup = document.getElementById(popupName);
       popupOpen(currentPopup);
       evt.preventDefault();
-    } else {
-      // if no popup - create popup for card image from template
-      const imgUrl = evt.target.src;
-      const imgTitle = evt.target
-        .closest(".card")
-        .querySelector(".card__title").textContent;
-      const popupData = {
-        name: imgTitle,
-        link: imgUrl,
-      };
-      main.append(createCardPopup(popupData));
-      currentPopup = document.getElementById(popupName);
-      //   console.log(`after creating - ${currentPopup}`);
-      popupOpen(currentPopup);
-      evt.preventDefault();
-    }
-  });
+    });
+  }
 });
