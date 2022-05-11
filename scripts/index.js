@@ -4,6 +4,7 @@ let main = document.querySelector(".main");
 // all elements with position: fixed
 // for compensate hide scroll when popup opened
 let lockPaddings = document.querySelectorAll(".lock-padding");
+const timeout = 400;
 
 // get tag where insert cards
 const albumContainer = document.querySelector(".album-container");
@@ -146,23 +147,6 @@ function PopupSaveProfile(evt) {
   popupClose(evt.target.closest(".popup"));
 }
 
-function createCardPopup(data) {
-  // get card template content
-  const cardImgPopupTemplate = document.querySelector(
-    "#card-popup-image-template"
-  ).content;
-
-  // duplicate all card template
-  const imgPopup = cardImgPopupTemplate.querySelector(".popup").cloneNode(true);
-
-  // insert text and img src from face DB
-  imgPopup.querySelector(".popup__img-title").textContent = data.name;
-  //   cardElement.getElementsByClassName("")
-  imgPopup.querySelector(".popup__img").src = data.link;
-
-  return imgPopup;
-}
-
 function PopupSaveCard(evt) {
   evt.preventDefault();
   const card = {
@@ -187,10 +171,13 @@ function bodyLock() {
 }
 
 function bodyUnLock() {
-  body.style.paddingRight = 0;
-  // for all position:fixed elements add paddingRight
-  lockPaddings.forEach((elem) => (elem.style.paddingRight = 0));
-  body.classList.remove("body_lock");
+    // unlock scroll after popup disappear
+    setTimeout(() => {
+        body.style.paddingRight = 0;
+        // for all position:fixed elements add paddingRight
+        lockPaddings.forEach((elem) => (elem.style.paddingRight = 0));
+        body.classList.remove("body_lock");
+    }, timeout);
 }
 
 // ==================== profile popup save button ==============================================
