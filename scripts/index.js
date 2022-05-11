@@ -8,8 +8,12 @@ let lockPaddings = document.querySelectorAll(".lock-padding");
 // get tag where insert cards
 const albumContainer = document.querySelector(".album-container");
 
+// =============== Edit Profile =======================
 let popupEditProfile = main.querySelector(".popup-edit-profile");
-let popupAddCard = main.querySelector(".popup-add-card");
+
+// profile html page Name and About
+let profileName = main.querySelector(".profile-header__name");
+let profileAbout = main.querySelector(".profile-header__about");
 
 // Profile form input fields
 let profilePopupName = popupEditProfile.querySelector(
@@ -18,18 +22,13 @@ let profilePopupName = popupEditProfile.querySelector(
 let profilePopupAbout = popupEditProfile.querySelector(
   ".form__input_type_about"
 );
-let profilePopupSave = popupEditProfile.querySelector(
-  ".form__button_action_save"
-);
-
-// profile html page Name and About
-let profileName = main.querySelector(".profile-header__name");
-let profileAbout = main.querySelector(".profile-header__about");
 
 profilePopupName.value = profileName.textContent;
 profilePopupAbout.value = profileAbout.textContent;
 
-// Add Card input fields
+// =============== Add Card input fields ================
+let popupAddCard = main.querySelector(".popup-add-card");
+// fields reset vaues
 popupAddCard.querySelector(".add-card-name").value = "";
 popupAddCard.querySelector(".add-card-url").value = "";
 
@@ -90,23 +89,26 @@ function createCard(data) {
   // add event listener for card image popup
   const popupLink = cardElement.querySelector(".popup-link");
   popupLink.addEventListener("click", (evt) => {
-    const popupName = popupLink.getAttribute("href").replace("#", "");
-    currentPopup = document.getElementById(popupName);
-    // fill popup with actual data
+    // fill card popup with actual data img link and title
     const imgUrl = evt.target.src;
     const imgTitle = evt.target
       .closest(".card")
       .querySelector(".card__title").textContent;
-
     const cardPopupElement = document.getElementById("popup-img");
-    console.log(cardPopupElement);
     cardPopupElement.querySelector(".popup__img").src = imgUrl;
     cardPopupElement.querySelector(".popup__img-title").textContent = imgTitle;
-    popupOpen(currentPopup);
+
+    popupOpen(getCurrentPopup(popupLink));
     evt.preventDefault();
   });
 
   return cardElement;
+}
+
+function getCurrentPopup(popupLink) {
+  const popupName = popupLink.getAttribute("href").replace("#", "");
+  const currentPopup = document.getElementById(popupName);
+  return currentPopup;
 }
 
 // loop throw fake DB array to generate cards and insert it
@@ -134,8 +136,6 @@ function popupOpen(popup) {
 
 function popupClose(popup) {
   popup.classList.remove("popup_opened");
-  // delete pupup element from the page if this is image card popup
-  //   if (popup.id.includes("popup-img")) popup.remove();
   bodyUnLock();
 }
 
@@ -208,9 +208,7 @@ popupLinks.forEach((elem) => {
   // create listener only for non card popup links
   if (!elem.href.includes("popup-img")) {
     elem.addEventListener("click", (evt) => {
-      let popupName = elem.getAttribute("href").replace("#", "");
-      let currentPopup = document.getElementById(popupName);
-      popupOpen(currentPopup);
+      popupOpen(getCurrentPopup(elem));
       evt.preventDefault();
     });
   }
