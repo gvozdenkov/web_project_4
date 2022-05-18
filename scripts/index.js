@@ -63,6 +63,18 @@ const initialCards = [
   },
 ];
 
+// all cards listeners ===============================
+albumContainer.addEventListener("click", albumClickHandler);
+
+function albumClickHandler(evt) {
+  if (evt.target.classList.contains("card__like"))
+    evt.target.classList.toggle("card__like_type_active");
+  else if (evt.target.classList.contains("card__del"))
+    evt.target.closest(".card").remove();
+}
+
+// ===================================================
+
 function createCard(data) {
   // get card template content
   const cardTemplate = document.querySelector("#card-template").content;
@@ -74,18 +86,6 @@ function createCard(data) {
   cardElement.querySelector(".card__title").textContent = data.name;
   //   cardElement.getElementsByClassName("")
   cardElement.querySelector(".card__img").src = data.link;
-
-  // add event listener for .card__dell trash icon to del card
-  cardElement
-    .querySelector(".card__del")
-    .addEventListener("click", (evt) => evt.target.closest(".card").remove());
-
-  // listener for like button
-  cardElement
-    .querySelector(".card__like")
-    .addEventListener("click", (evt) =>
-      evt.target.classList.toggle("card__like_type_active")
-    );
 
   // add event listener for card image popup
   const popupLink = cardElement.querySelector(".popup-link");
@@ -171,13 +171,13 @@ function bodyLock() {
 }
 
 function bodyUnLock() {
-    // unlock scroll after popup disappear
-    setTimeout(() => {
-        body.style.paddingRight = 0;
-        // for all position:fixed elements add paddingRight
-        lockPaddings.forEach((elem) => (elem.style.paddingRight = 0));
-        body.classList.remove("body_lock");
-    }, timeout);
+  // unlock scroll after popup disappear
+  setTimeout(() => {
+    body.style.paddingRight = 0;
+    // for all position:fixed elements add paddingRight
+    lockPaddings.forEach((elem) => (elem.style.paddingRight = 0));
+    body.classList.remove("body_lock");
+  }, timeout);
 }
 
 // ==================== profile popup save button ==============================================
