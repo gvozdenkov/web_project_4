@@ -31,9 +31,8 @@
   position: relative;
   background-color: #ffffff;
   border-radius: 10px;
-  max-width: 430px;
-  min-width: 280px;
-  max-height: 330px;
+  max-width: 630px;
+  min-width: 430px;
   padding: 35px;
   box-sizing: border-box;
 }
@@ -73,6 +72,12 @@
   position: absolute;
   bottom: -30px;
   left: 0;
+}
+
+@media (max-width: 1024px) {
+  .popup__content {
+    min-width: max(50%, 280px);
+  }
 }
 
 @media (max-width: 768px) {
