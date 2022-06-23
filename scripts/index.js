@@ -200,3 +200,10 @@ popupLinks.forEach((elem) => {
     });
   }
 });
+
+document.addEventListener("keydown", (evt) => {
+  if (evt.code === 'Escape') {
+    console.log("ESC pressed!!!");
+    popupClose(document.querySelector(".popup_opened"));
+  }
+})
