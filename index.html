@@ -110,28 +110,33 @@
                   alt="close button"
                   class="popup__close popup-close"
                 />
-                <form action="" method="post" class="form">
-                  <h2 class="form__title">Edit Profile</h2>
-                  <fieldset class="form__fieldset">
-                    <!-- <label for="username" class="form__label">Username</label> -->
-                    <input
-                      type="text"
-                      class="form__input form__input_type_username user-name"
-                      id="username"
-                      name="username"
-                      placeholder="Name"
-                      required
-                    />
-                    <!-- <label for="about" class="form__label">About</label> -->
-                    <input
-                      type="text"
-                      class="form__input form__input_type_about"
-                      id="about"
-                      name="about"
-                      placeholder="About me"
-                    />
-                  </fieldset>
-                  <fieldset class="form__fieldset">
+                <h2 class="form__title">Edit Profile</h2>
+                <form class="form" name="profile" novalidate>
+                  <fieldset class="form__set">
+                    <label class="form__field">
+                      <input
+                        type="text"
+                        class="form__input form__input_type_username user-name"
+                        name="username"
+                        placeholder="Name"
+                        minlength="2"
+                        maxlength="40"
+                        required
+                      />
+                      <span class="form__input-error">Test Error message</span>
+                    </label>
+                    <label class="form__field">
+                      <input
+                        type="text"
+                        class="form__input form__input_type_about"
+                        name="about"
+                        placeholder="About me"
+                        minlength="2"
+                        maxlength="200"
+                        required
+                      />
+                      <span class="form__input-error">Test Error message</span>
+                    </label>
                     <button
                       type="submit"
                       class="form__button form__button_action_save"
@@ -152,29 +157,32 @@
                   alt="close button"
                   class="popup__close popup-close"
                 />
-                <form action="" method="post" class="form">
-                  <h2 class="form__title">New Place</h2>
-                  <fieldset class="form__fieldset">
-                    <!-- <label for="username" class="form__label">Username</label> -->
-                    <input
-                      type="text"
-                      class="form__input form__input_type_username add-card-name"
-                      id="title"
-                      name="title"
-                      placeholder="Tilte"
-                      required
-                    />
-                    <!-- <label for="about" class="form__label">About</label> -->
-                    <input
-                      type="url"
-                      class="form__input form__input_type_url add-card-url"
-                      id="img_url"
-                      name="img_url"
-                      placeholder="Image URL"
-                      required
-                    />
-                  </fieldset>
-                  <fieldset class="form__fieldset">
+                <h2 class="form__title">New Place</h2>
+                <form class="form" name="add-card" novalidate>
+                  <fieldset class="form__set">
+                    <label class="form__field">
+                      <input
+                        type="text"
+                        class="form__input add-card-name"
+                        name="title"
+                        placeholder="Tilte"
+                        minlength="2"
+                        maxlength="50"
+                        required
+                      />
+                      <span class="form__input-error">Test Error message</span>
+                    </label>
+                    <label class="form__field">
+                      <input
+                        type="url"
+                        class="form__input form__input_type_url add-card-url"
+                        id="img_url"
+                        name="img_url"
+                        placeholder="Image URL"
+                        required
+                      />
+                      <span class="form__input-error">Test Error message</span>
+                    </label>
                     <button
                       type="submit"
                       class="form__button form__button_action_save"
@@ -263,5 +271,6 @@
       </footer>
     </div>
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/formValidation.js"></script>
   </body>
 </html>
